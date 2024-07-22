@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch --env-file=.env server.js & npx tailwindcss -i ./src/input.css -o ./src/output.css --watch"
+    "dev": "node --watch --env-file=.env server.js & npx tailwindcss -i ./src/input.css -o ./src/output.css --watch",
+    "build": "npx tailwindcss -i ./src/input.css -o ./src/output.css & node --env-file=.env server.js"
   },
   "author": "",
   "license": "ISC",
