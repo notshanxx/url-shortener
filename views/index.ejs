@@ -7,61 +7,80 @@
 
     <link type="text/css" href="/output.css" rel="stylesheet" />
   </head>
-  <body class="hero bg-base-200 min-h-screen">
-    <div class="hero-content flex-col text-center">
-      <div class="prose"><h1>URL Shortener</h1></div>
+  <body>
+    <!-- HERO SECTION -->
+    <div class="hero bg-base-200 min-h-screen">
+      <div class="hero-content flex-col text-center">
+        <div class="prose"><h1>URL Shortener</h1></div>
 
-      <form action="/shortUrls" method="post" class="py-6">
-        <label for="fullUrl" class="text-xl font-bold mx-1">URl</label>
-        <div class="join">
-          <input
-            placeholder="https://"
-            type="url"
-            name="fullUrl"
-            id="fullUrl"
-            class="input input-bordered join-item w-full max-w-xs"
-          />
-          <button
-            type="submit"
-            class="btn btn-primary join-item rounded-r-full"
-          >
-            Shorten
-          </button>
+        <form action="/shortUrls" method="post" class="py-6">
+          <label for="fullUrl" class="text-xl font-bold mx-1">URL</label>
+          <div class="join">
+            <input
+              placeholder="https://"
+              type="url"
+              name="fullUrl"
+              id="fullUrl"
+              class="input input-bordered join-item w-full max-w-xs"
+            />
+            <button
+              type="submit"
+              class="btn btn-primary join-item rounded-r-full"
+            >
+              Shorten
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- END HERO SECTION -->
+
+    <!-- <div class="hero  min-h-screen">
+
+    </div> -->
+
+    <div class="hero bg-base-200 min-h-screen">
+      <div>
+        <div class="prose"><h1 class="text-center my-20">SHORTENED LINKS</h1></div>
+        
+        <div>
+          <table class="table table-xs md:table-md text-center ">
+            <thead>
+              <tr>
+                <th>Full URL</th>
+                <th>Short URL</th>
+                <th>Clicks</th>
+                <th></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% shortUrls.forEach(shortUrl => { %>
+              <tr>
+                <td>
+                  <a href="<%= shortUrl.full %>" target="_blank"
+                    ><%= shortUrl.full %></a
+                  >
+                </td>
+                <td>
+                  <a href="<%= shortUrl.short %>" target="_blank"
+                    >/<%= shortUrl.short %></a
+                  >
+                </td>
+                <td><%= shortUrl.clicks %></td>
+                <td>
+                  <form method="POST" action="/<%= shortUrl._id %>" class="flex items-center gap-3">
+                    <input type="hidden" name="_method" value="DELETE" />
+                    <button type="submit" class="btn btn-warning">
+                      Delete
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
         </div>
-      </form>
-      <div class="overflow-x-auto">
-        <table class="table table-zebrac">
-          <thead>
-            <tr>
-              <th>Full URL</th>
-              <th>Short URL</th>
-              <th>Clicks</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% shortUrls.forEach(shortUrl => { %>
-            <tr>
-              <td>
-                <a href="<%= shortUrl.full %>" target="_blankc"
-                  ><%= shortUrl.full %></a
-                >
-              </td>
-              <td>
-                <a href="<%= shortUrl.short %>" target="_blank"
-                  >/<%= shortUrl.short %></a
-                >
-              </td>
-              <td><%= shortUrl.clicks %></td>
-              <td>
-                <form method="POST" action="/<%= shortUrl._id %>">
-                  <input type="hidden" name="_method" value="DELETE" />
-                  <button type="submit" class="btn btn-warning">Delete</button>
-                </form>
-              </td>
-            </tr>
-            <% }); %>
-          </tbody>
-        </table>
       </div>
     </div>
   </body>
