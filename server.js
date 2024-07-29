@@ -1,6 +1,8 @@
 import express from "express";
 import SHORTURL_MODEL from "./models/shortUrl.js";
+import USER_MODEL from "./models/user.js";
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 // import path from 'path'
 // import fs from 'fs'
 // import { fileURLToPath } from 'url'
@@ -20,7 +22,7 @@ const connectMongoDB = async (mongoURI) => {
   }
 };
 
-// const __dirname = import.meta.dirname;
+const __dirname = import.meta.dirname;
 // const __filename = import.meta.filename;
 
 //add ejs view engine
@@ -29,7 +31,54 @@ app.use(express.urlencoded({ extended: false }));
 // to use css in ejs put this and add output.css
 app.use(express.static("src"));
 
+// login hahahahah
+
+let allow = false;
+
+app.get("/login", async (req, res) => {
+  if (allow) {
+    return res.redirect("/");
+  }
+
+  res.sendFile(__dirname + "/login.html");
+});
+
+app.post("/login", async (req, res) => {
+  // check if allowed
+  if (allow) {
+    return res.redirect("/");
+  }
+
+  // COMPARINGS
+  const userList = await USER_MODEL.findOne({ name: req.body.username });
+
+
+  if (userList.name === req.body.username) {
+    console.log("THEREs user with that name");
+    // console.log(userList.password)
+    if (userList.password === req.body.password) {
+      console.log("yayaay");
+      allow = true;
+      return res.redirect("/");
+    }
+    console.log("wrong");
+  } else {
+    console.log("not success");
+  }
+  console.log(userList);
+  console.log(req.body.password);
+  console.log(userList.password);
+
+  res.redirect("/login");
+});
+
+// end of login
+
 app.get("/", async (req, res) => {
+  // check if true
+  if (!allow) {
+    return res.redirect("/login");
+  }
   const urlLists = await SHORTURL_MODEL.find();
   res.render("index", { shortUrls: urlLists });
 });
