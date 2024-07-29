@@ -50,26 +50,47 @@ app.post("/login", async (req, res) => {
   }
 
   // COMPARINGS
-  const userList = await USER_MODEL.findOne({ name: req.body.username });
+  const user = await USER_MODEL.findOne({ name: req.body.username });
 
+  // check if no found user
+  if (user === null) {
+    console.log('cant find user')
+    return res.status(400).redirect('/login')
+  }
 
-  if (userList.name === req.body.username) {
-    console.log("THEREs user with that name");
-    // console.log(userList.password)
-    if (userList.password === req.body.password) {
+  // check password
+  // NOTE!! user already encrypted in db
+  try {
+    if( await bcrypt.compare(req.body.password, user.password)){
       console.log("yayaay");
       allow = true;
       return res.redirect("/");
     }
-    console.log("wrong");
-  } else {
-    console.log("not success");
+    console.log("wrong pass");
+    
+  } catch (error) {
+    console.log(error);
+    res.status(500).send()
   }
-  console.log(userList);
-  console.log(req.body.password);
-  console.log(userList.password);
 
-  res.redirect("/login");
+
+  // if (user.name === req.body.username) {
+  //   console.log("THEREs user with that name");
+  //   console.log(userList.password)
+  //   if (user.password === req.body.password) {
+  //     console.log("yayaay");
+  //     allow = true;
+  //     return res.redirect("/");
+  //   }
+  //   console.log("wrong");
+  // } else {
+  //   console.log("not success");
+  // }
+  // console.log(user);
+  // console.log(req.body.password);
+  // console.log(userList.password);
+
+  // res.redirect("/login");
 });
 
 // end of login
