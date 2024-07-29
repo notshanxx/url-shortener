@@ -67,7 +67,8 @@ app.post("/login", async (req, res) => {
       return res.redirect("/");
     }
     console.log("wrong pass");
-    
+    //redirect if wrong password
+    res.redirect("/login")
   } catch (error) {
     console.log(error);
     res.status(500).send()
