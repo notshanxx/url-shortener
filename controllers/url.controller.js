@@ -11,7 +11,7 @@ export const redirectShortUrl = async (req, res) => {
   shortUrl.clicks++;
   shortUrl.save();
 
-  await res.redirect(shortUrl.full);
+  await res.render('redirect', {url: shortUrl.full})
 };
 
 // POST or create in /shortUrls
