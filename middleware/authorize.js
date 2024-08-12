@@ -7,7 +7,7 @@ async function verifyToken(req, res, next) {
   const token = req.cookies.token;
   // console.log(req.cookies)
   if (!token) {
-    return res.sendStatus(403); // will send forbidden
+    return res.redirect('/login'); // will send you to login
   }
 
   if (token == null) return res.sendStatus(401); // No token provided

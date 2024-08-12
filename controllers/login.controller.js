@@ -67,7 +67,7 @@ export const loginPost = async (req, res) => {
       res.cookie( "token", token, options );
       // console.log( "🍪", req.cookies );
   
-      return res.sendStatus(200)
+      return res.redirect('/')
       //send status 200 ok
   
       }
