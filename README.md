@@ -1,0 +1,2 @@
+- used jwt token and cookies for authentication
+- 
